@@ -5,7 +5,7 @@ import { Sparkles, Brain } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CommitmentSection = () => {
+const CommitmentSection = ({handleNavigateToContactPage}) => {
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -95,7 +95,8 @@ const CommitmentSection = () => {
         </div>
 
         <div className="content-fade">
-          <button className="bg-[#FF6600] hover:bg-[#FF7F00] text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg shadow-[#FF6600]/20 group">
+          <button className="bg-[#FF6600] hover:bg-[#FF7F00] text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg shadow-[#FF6600]/20 group"
+          onClick={handleNavigateToContactPage}>
             Get in Touch Today
             <span className="ml-2 inline-block transform group-hover:translate-x-1 transition-transform duration-300">→</span>
           </button>

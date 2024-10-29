@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/logo.jpg';
 
-const Navbar = ({ handleNavigateToContactPage }) => {
+const ContactNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -33,26 +33,8 @@ const Navbar = ({ handleNavigateToContactPage }) => {
     }
   };
 
-  const linkVariants = {
-    closed: { x: 50, opacity: 0 },
-    open: i => ({
-      x: 0,
-      opacity: 1,
-      transition: {
-        delay: i * 0.1
-      }
-    })
-  };
-
-  const handleNavigation = (item) => {
-    if (item === 'Contact Us') {
-      handleNavigateToContactPage();
-    } else {
-      // Keep the original href navigation for other items
-      window.location.href = `#${item.toLowerCase().replace(' ', '-')}`;
-    }
-    // Close mobile menu if it's open
-    setIsOpen(false);
+  const handleHomeNavigation = () => {
+    window.location.href = '/';
   };
 
   return (
@@ -69,32 +51,24 @@ const Navbar = ({ handleNavigateToContactPage }) => {
             </span>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {['About Us', 'Our Work', 'Contact Us'].map((item, index) => (
-              <motion.button
-                key={item}
-                onClick={() => handleNavigation(item)}
-                className={`relative text-lg font-medium ${
-                  index === 2 ? 'px-6 py-2 bg-[#FF6600] text-white rounded-full hover:bg-[#003366] transition-colors duration-300'
-                  : 'text-[#003366] hover:text-[#FF6600] transition-colors duration-300'
-                }`}
-                whileHover={index !== 2 ? {
-                  scale: 1.05,
-                  transition: { duration: 0.2 }
-                } : {}}
-              >
-                {item}
-                {index !== 2 && (
-                  <motion.div
-                    className="absolute bottom-0 left-0 w-full h-0.5 bg-[#FF6600]"
-                    initial={{ scaleX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                )}
-              </motion.button>
-            ))}
+          {/* Desktop Home Button */}
+          <div className="hidden lg:flex items-center">
+            <motion.button
+              onClick={handleHomeNavigation}
+              className="text-lg font-medium text-[#003366] hover:text-[#FF6600] transition-colors duration-300 relative"
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.2 }
+              }}
+            >
+              Home
+              <motion.div
+                className="absolute bottom-0 left-0 w-full h-0.5 bg-[#FF6600]"
+                initial={{ scaleX: 0 }}
+                whileHover={{ scaleX: 1 }}
+                transition={{ duration: 0.2 }}
+              />
+            </motion.button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -139,19 +113,18 @@ const Navbar = ({ handleNavigateToContactPage }) => {
                 </button>
               </div>
               <div className="flex flex-col space-y-6">
-                {['About Us', 'Our Work', 'Contact Us'].map((item, i) => (
-                  <motion.button
-                    key={item}
-                    onClick={() => handleNavigation(item)}
-                    custom={i}
-                    variants={linkVariants}
-                    className={`text-xl font-medium ${
-                      i === 2 ? 'text-[#FF6600]' : 'text-[#003366]'
-                    } hover:text-[#FF6600] transition-colors duration-300`}
-                  >
-                    {item}
-                  </motion.button>
-                ))}
+                <motion.button
+                  onClick={() => {
+                    handleHomeNavigation();
+                    setIsOpen(false);
+                  }}
+                  className="text-xl font-medium text-[#003366] hover:text-[#FF6600] transition-colors duration-300"
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  Home
+                </motion.button>
               </div>
             </div>
           </motion.div>
@@ -161,4 +134,4 @@ const Navbar = ({ handleNavigateToContactPage }) => {
   );
 };
 
-export default Navbar;
+export default ContactNavbar;

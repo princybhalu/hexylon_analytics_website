@@ -12,13 +12,14 @@ import {
 //   Circuit
 } from "lucide-react";
 import logo from '../assets/logo.png';
+import { useNavigate } from "react-router-dom";
 
 
 gsap.registerPlugin(ScrollTrigger);
 
-const FooterWithTransition = ({handleNavigateToContactPage}) => {
+const FooterWithTransition = () => {
   const sectionRef = useRef(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     let ctx = gsap.context(() => {
       // Animate circuit paths
@@ -55,15 +56,6 @@ const FooterWithTransition = ({handleNavigateToContactPage}) => {
     return () => ctx.revert();
   }, []);
 
-  const handleNavigation = (item) => {
-    if (item === 'Contact Us') {
-      handleNavigateToContactPage();
-    } else {
-      // Keep the original href navigation for other items
-      window.location.href = `#${item.toLowerCase().replace(' ', '-')}`;
-    }
-  };
-
   return (
     <div ref={sectionRef}>
       {/* Transition Section */}
@@ -88,9 +80,8 @@ const FooterWithTransition = ({handleNavigateToContactPage}) => {
             <div className="fade-up">
               <h4 className="text-sm font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li className="hover:text-[#FF6600] cursor-pointer transition-colors" onClick={() =>  handleNavigation("Our Work")}>Our Work</li>
-                <li className="hover:text-[#FF6600] cursor-pointer transition-colors" onClick={ () => handleNavigation("About Us")} >About Us</li>
-                <li className="hover:text-[#FF6600] cursor-pointer transition-colors" onClick={handleNavigateToContactPage}>Contact</li>
+                <li className="hover:text-[#FF6600] cursor-pointer transition-colors" onClick={() => navigate("/")}>Home</li>
+                <li className="hover:text-[#FF6600] cursor-pointer transition-colors">Contact</li>
               </ul>
             </div>
 

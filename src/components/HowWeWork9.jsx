@@ -91,6 +91,7 @@ const HowWeWorkSection = () => {
   const [triggerTyping, setTriggerTyping] = useState(false);
   const [typingComplete, setTypingComplete] = useState(false);
   const scrollTriggerRef = useRef(null);
+  const timelineRef = useRef(null);
 
   const steps = [
     {
@@ -182,29 +183,68 @@ const HowWeWorkSection = () => {
     document.body.style.overflow = "auto";
   };
 
+  // useEffect(() => {
+  //   let ctx = gsap.context(() => {
+  //     // Create ScrollTrigger for typing animation
+  //     scrollTriggerRef.current = ScrollTrigger.create({
+  //       trigger: headerRef.current,
+  //       start: "top 80%",
+  //       onEnter: () => {
+  //         if (!typingComplete) {
+  //           setTriggerTyping(true);
+  //           document.body.style.overflow = "hidden";
+  //         }
+  //       },
+  //       once: true,
+  //     });
+
+  //     return () => {
+  //       if (scrollTriggerRef.current) {
+  //         scrollTriggerRef.current.kill();
+  //       }
+  //     };
+  //   }, sectionRef.current);
+
+  //   return () => {
+  //     ctx.revert();
+  //   };
+  // }, []);
+
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Set up the scroll trigger for typing animation
-      ScrollTrigger.create({
+    let ctx = gsap.context(() => {
+      // Create ScrollTrigger for typing animation
+      scrollTriggerRef.current = ScrollTrigger.create({
         trigger: headerRef.current,
         start: "top 80%",
         onEnter: () => {
           if (!typingComplete) {
             setTriggerTyping(true);
-            // Disable scrolling during typing animation
             document.body.style.overflow = "hidden";
           }
         },
-        once: true, // Ensures the trigger only fires once
+        once: true,
       });
-    });
+    }, sectionRef.current);
+  
+    return () => {
+      if (scrollTriggerRef.current) {
+        scrollTriggerRef.current.kill();
+      }
+      ctx.revert();
+    };
+  }, []);
 
-    if (typingComplete) {
-      const totalWidth = cardsContainerRef.current.scrollWidth;
-      const containerWidth = containerRef.current.offsetWidth;
+  useEffect(() => {
+    if (!typingComplete) {
+      return;
+    }
+
+    let ctx = gsap.context(() => {
+      const totalWidth = cardsContainerRef.current?.scrollWidth || 0;
+      const containerWidth = containerRef.current?.offsetWidth || 0;
       const distance = totalWidth - containerWidth;
-      // Create a timeline for the horizontal scroll
-      const tl = gsap.timeline({
+
+      timelineRef.current = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
@@ -214,29 +254,38 @@ const HowWeWorkSection = () => {
           pinSpacing: true,
           anticipatePin: 1,
           onUpdate: (self) => {
-            // Add parallax effect to background
-            const progress = self.progress;
-            sectionRef.current.style.backgroundPosition = `${
-              progress * 100
-            }% 50%`;
+            if (sectionRef.current) {
+              const progress = self.progress;
+              sectionRef.current.style.backgroundPosition = `${
+                progress * 100
+              }% 50%`;
+            }
+          },
+          onKill: () => {
+            if (sectionRef.current) {
+              sectionRef.current.style.backgroundPosition = "";
+            }
           },
         },
       });
 
-      tl.to(cardsContainerRef.current, {
-        x: -distance,
-        ease: "none",
-        duration: 1,
-      });
-    }
+      if (timelineRef.current) {
+        timelineRef.current.to(cardsContainerRef.current, {
+          x: -distance,
+          ease: "none",
+          duration: 1,
+        });
+      }
+    }, sectionRef.current);
 
     return () => {
-      ctx.revert();
-      if (scrollTriggerRef.current) {
-        scrollTriggerRef.current.kill();
+      if (timelineRef.current) {
+        timelineRef.current.kill();
       }
+      ctx.revert();
     };
   }, [typingComplete]);
+
 
   return (
     <div

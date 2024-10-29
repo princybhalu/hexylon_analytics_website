@@ -7,29 +7,28 @@ import IndustriesSection from "../components/IndustriesSection2";
 import OurWorkSection from "../components/OurWork4";
 import CommitmentSection from "../components/OurCommit1";
 import Footer from "../components/Footer";
-import EntranceAnimation from "../components/Loading3";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigateToContactPage = () => {
+    // navigate("/contact-us");
+    window.location.href = "/contact-us";
+  }
 
   return (
     <>
-      {/* {!isAnimationComplete && (
-        <EntranceAnimation setIsAnimationComplete={setIsAnimationComplete} />
-      )} */}
-
-      {/* {isAnimationComplete && ( */}
         <>
-          <Navbar />
-          <HeroSection />
+          <Navbar handleNavigateToContactPage={handleNavigateToContactPage}/>
+          <HeroSection handleNavigateToContactPage={handleNavigateToContactPage}/>
           <HowWeWork />
           <WhyUs />
           <IndustriesSection />
           <OurWorkSection />
-          <CommitmentSection />
-          <Footer />
+          <CommitmentSection handleNavigateToContactPage={handleNavigateToContactPage} />
+          <Footer handleNavigateToContactPage={handleNavigateToContactPage}/>
         </>
-      {/* )} */}
     </>
   );
 }
