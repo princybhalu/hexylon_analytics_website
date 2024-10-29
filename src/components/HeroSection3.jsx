@@ -276,7 +276,7 @@ const HeroSection = ({ handleNavigateToContactPage }) => {
             mounted ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
-          <h1 className="text-5xl md:text-7xl font-bold mb-2 bg-clip-text text-[#003366] Darker-Grotesque">
+          <h1 className="text-3xl md:text-5xl md:text-7xl font-bold mb-2 bg-clip-text text-[#003366] Darker-Grotesque">
             Unlock the Future with{" "}
           </h1>
           <p className="text-5xl md:text-7xl font-bold mb-8 text-[#FF6600] relative h-[80px] flex justify-center items-center  Darker-Grotesque">

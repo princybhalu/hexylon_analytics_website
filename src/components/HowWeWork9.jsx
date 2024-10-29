@@ -58,7 +58,7 @@ const WorkCard = ({ title, description, number, icon }) => {
   return (
     <div
       ref={cardRef}
-      className="flex-shrink-0 w-[400px] min-h-[420px] bg-white rounded-xl shadow-xl p-8 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl relative overflow-hidden group"
+      className="flex-shrink-0 w-[400px] min-h-[420px] bg-white rounded-xl shadow-xl p-4 md:p-8 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl relative overflow-hidden group"
     >
       <div className="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-gradient-to-br from-blue-100 to-transparent rounded-full opacity-50 transform group-hover:scale-150 transition-transform duration-500"></div>
 
@@ -305,21 +305,21 @@ const HowWeWorkSection = () => {
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-20">
         {/* Enhanced Header Section */}
-        <div ref={headerRef} className="relative mb-16">
+        <div ref={headerRef} className="relative mb-8 md:mb-16">
           {/* Decorative Elements */}
           <div className="absolute -left-4 -top-4 w-20 h-20 bg-blue-100 rounded-full opacity-50 animate-pulse"></div>
           <div className="absolute -right-4 -bottom-4 w-32 h-32 bg-orange-100 rounded-full opacity-50 animate-pulse delay-150"></div>
 
           {/* Main Header Content */}
-          <div className="relative z-10 bg-gradient-to-r from-[#003366] to-[#004d99] rounded-2xl shadow-xl p-4 transform hover:scale-[1.02] transition-all duration-300">
-            <div className="flex flex-col gap-6 items-start max-w-4xl mx-auto text-white">
+          <div className="relative z-10 bg-gradient-to-r from-[#003366] to-[#004d99] rounded-2xl shadow-xl p-2 md:p-4 transform hover:scale-[1.02] transition-all duration-300">
+            <div className="flex flex-col gap-3 md:gap-6 items-start max-w-4xl mx-auto text-white">
               {/* Title */}
               <TypingEffect
                 text="Our methodology is grounded in understanding your unique challenges, finding opportunities for improvement, and crafting customized AI solutions. Here's how we make it happen:"
                 triggerAnimation={triggerTyping}
                 onComplete={handleTypingComplete}
               />
-              <div className="h-1 w-24 bg-[#FF6600] mt-4 rounded-full"></div>
+              <div className="h-1 w-24 bg-[#FF6600] mt-1 md:mt-4 rounded-full"></div>
 
               {/* Visual Elements */}
               <div className="absolute right-8 top-8 opacity-20">
